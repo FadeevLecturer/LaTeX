@@ -1,0 +1,597 @@
+\ProvidesPackage{NeuroFuzzy}
+
+\DeclareOption{usebuilddir}{\def\@usebuilddir{yes}}
+\DeclareOption{todos}{\def\@todos{yes}}
+
+\ProcessOptions\relax 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page layout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[a4paper, hmargin={30mm,15mm}, vmargin={20mm,20mm}]{geometry}
+\reversemarginpar
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Encoding and language
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T2A]{fontenc}
+\usepackage[russian, english]{babel}
+\usepackage[utf8]{inputenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Paragraph decoration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{indentfirst, setspace}
+\onehalfspacing
+\let\oldfootnotesize\footnotesize
+\renewcommand{\footnotesize}{\small}
+\parindent=1.25cm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section decoration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{titlesec, titletoc, appendix, etoolbox}
+\titleclass{\part}{top}
+\titleformat{\part}[block]{\Large\bf\scshape\centering}{}{10pt}{}[]
+\titlespacing*{\part}{0pt}{-2\topskip}{10pt}
+\titleclass{\chapter}{top}
+\titleformat{\chapter}[block]{\begin{hyphenrules}{nohyphenation}\singlespacing}%
+    {\hspace{1.25cm}\Large\bf\chaptername\;\thechapter}{-1.25cm + 15pt}%
+    {\hspace{1.25cm}\Large\bf}[\end{hyphenrules}\onehalfspacing]
+\titlespacing{\chapter}{0pt}{-2.3\topskip}{0pt}
+\titleformat{\section}[block]{\begin{hyphenrules}{nohyphenation}\singlespacing}%
+    {\hspace{1.25cm}\bf\thesection}{-1.25cm + 10pt}%
+    {\hspace{1.25cm}\bf}[\end{hyphenrules}\onehalfspacing]
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titleformat{\subsection}[block]{\begin{hyphenrules}{nohyphenation}\singlespacing}%
+    {\hspace{1.25cm}\bf\thesubsection}{-1.25cm + 10pt}%
+    {\hspace{1.25cm}\bf}[\end{hyphenrules}\onehalfspacing]
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+\titleformat{\subsubsection}[block]{\begin{hyphenrules}{nohyphenation}\singlespacing}%
+    {\hspace{1.25cm}\bf}{0pt}%
+    {\hspace{1.25cm}\bf}[\end{hyphenrules}\onehalfspacing]
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+\titlecontents{part}[0em]{}{}{\bf}{\titlerule*[1pc]{.}\contentspage}
+\titlecontents{chapter}[0em]{}{\hspace*{4.8em}\contentslabel[\bf Глава\;\thecontentslabel]{4.8em}\bf}%
+    {\bf}{\titlerule*[1pc]{.}\contentspage}
+\makeatletter
+\apptocmd{\appendix}{%
+    \def\chaptername{Приложение}
+    \def\thechapter{\Asbuk{chapter}}%
+    \titleformat{\chapter}[display]{\begin{hyphenrules}{nohyphenation}\singlespacing\Large\bf\centering}%
+        {{\scshape Приложение\;\thechapter}}{10pt}{}[\end{hyphenrules}\onehalfspacing]
+    \titlecontents{chapter}[0em]{}{\hspace*{7.6em}\contentslabel[Приложение\;\thecontentslabel]{7.6em}}%
+        {\bf}{\titlerule*[1pc]{.}\contentspage}
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BibLaTeX (bibliography)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[backend=biber,
+            language=auto, autolang=other, babel=other,
+            citestyle=numeric-comp, bibstyle=gost-numeric,
+            maxnames=3, sorting=none
+            ]{biblatex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some useful packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{verbatim, ifthen}
+\usepackage{csquotes, ragged2e, nameref, chngcntr}
+\usepackage{amssymb, latexsym, amsmath, amsthm, mathtools, relsize, scalerel}
+\usepackage{euscript, mathrsfs, graphicx, epsfig, wrapfig, psfrag}
+\usepackage{float, rotating, oldgerm, soul, ulem, paralist, longtable, xspace, pbox}
+\usepackage[export]{adjustbox}
+\usepackage[pdfstartview=FitH, unicode=true, hidelinks, hyperfootnotes=false]{hyperref}
+\usepackage[norefs]{refcheck} % must be loaded after hyperref and AMS
+\graphicspath{{pictures/}}
+\LTcapwidth=\textwidth
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figure decoration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\counterwithout{figure}{chapter}
+\usepackage[raggedright]{subfigure} % center
+\renewcommand{\thesubfigure}{(\asbuk{subfigure})}
+\usepackage{ccaption}
+\captiondelim{~---~}
+\usepackage[percent]{overpic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listings (source code)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+\lstdefinestyle{NeuroFuzzyDefaultStyle}{
+  numbers=left,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=true,
+  showstringspaces=true,
+  breaklines=true
+}
+\lstset{basicstyle=\small\ttfamily, style=NeuroFuzzyDefaultStyle}
+
+\makeatletter
+\ifdefined\@usebuilddir
+\usepackage[outputdir=build]{minted}
+\else
+\usepackage{minted}
+\fi
+\makeatother
+\setminted{
+    linenos=true,
+    fontfamily=tt,
+    fontsize=\small,
+    breaklines
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Arrays
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO notes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\ifdefined\@todos
+\setlength{\marginparwidth}{21mm}
+\usepackage[textsize=small, color=green!60!white, shadow]{todonotes} % enable
+\else
+\setlength{\marginparwidth}{6mm}
+\usepackage[textsize=tiny, color=green!60!white, shadow, disable]{todonotes} % disable
+\fi
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Equations and theorems
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \numberwithin{equation}{chapter}
+\counterwithout{equation}{chapter}
+\counterwithout{table}{chapter}
+\theoremstyle{plain}
+% \newtheorem{theorem}{\inputencoding{utf8}Теорема}[chapter]
+\newtheorem{theorem}{\indent\inputencoding{utf8}Теорема}
+\newtheorem{lemm}[theorem]{\indent\inputencoding{utf8}Лемма}
+\newtheorem{conseq}[theorem]{\indent\inputencoding{utf8}Следствие}
+\theoremstyle{definition}
+\newtheorem{definition}{\indent\inputencoding{utf8}Определение}
+\newtheorem{example}{\indent\inputencoding{utf8}Пример}
+\newtheorem{notice}{\indent\inputencoding{utf8}Замечание}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lists
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\labelenumi}{\arabic{enumi})}
+\renewcommand{\labelitemi}{---}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newcommand\supervisor[1]{\def\@supervisor{#1}}
+\newcommand\worktype[1]{\def\@worktype{#1}}
+\newcommand\approver[2]{\def\@approveri{#1}\def\@approverii{#2}}
+\renewcommand\maketitle{%
+\begin{titlepage}
+\centering
+Федеральное государственное бюджетное образовательное учреждение\\[-2mm] высшего образования\par
+{\small\scshape <<Московский государственный университет имени~М.\,В.\;Ломоносова>>}\par
+\includegraphics[width=12mm]{logo-phys} \raisebox{4.5mm}{\small\scshape Физический факультет}\\[1mm]
+\hrule
+\par\vfill\par
+\@worktype
+\par\vspace{15mm}\par
+{\large\scshape\bfseries\@title}
+\par\vfill\par
+\ifdefined\@approveri
+\begin{minipage}{0.4\textwidth}
+\singlespace
+\centering{\scshape Допущено к защите}
+\vspace{3mm}
+\par\justifying\noindent
+\@approveri\\[5mm]
+\uline{\hspace*{30mm}} \@approverii
+\end{minipage}
+\fi
+\hfill\begin{minipage}{0.4\textwidth}
+\singlespace
+Выполнил:\\
+\@author
+\ifdefined\@supervisor
+\\[10mm]
+Научный руководитель:\\
+\@supervisor
+\fi
+\end{minipage}
+\par\vfill\par
+Москва -- \@date
+\end{titlepage}
+\makeatother
+\setcounter{page}{2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% At begin document hooks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginDocument{
+    \pagestyle{plain}
+    \selectlanguage{russian}
+    \def\figurename{\inputencoding{utf8}Рисунок}
+    \def\contentsname{\inputencoding{utf8}Содержание}
+    \patchcmd{\tableofcontents}{chapter}{part}{}{}
+    \sloppy
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PgfPlots
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{pgfplots}
+
+\pgfplotsset{
+    every tick label/.append style={font=\small},
+    every axis plot/.append style={very thick}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Flowcharts
+%
+% Shapes:
+%   terminator
+%   start
+%   stop
+%   process
+%   predefined process
+%   preparation
+%   decision
+%   data io
+%   manual input
+%   display
+%   rcomment
+%   lcomment
+%   begin loop
+%   end loop
+%   multi-document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usetikzlibrary{calc, shapes, shadows, arrows, patterns}
+\def\nodefillcolor{blue!20}
+\newenvironment{flowchart}{\begin{tikzpicture}[node distance=0.75cm]}{\end{tikzpicture}}
+
+\def\arrow#1#2{\draw[arrow] (#1) -- (#2);}
+\def\arrowltext#1#2#3{\draw[arrow] (#1) -- node[anchor=east] {\small #3} (#2);}
+\def\arrowttext#1#2#3{\draw[arrow] (#1) -- node[anchor=south] {\small #3} (#2);}
+
+\tikzset{
+    terminator/.style={
+        rounded rectangle, text centered,
+        draw=black, fill=\nodefillcolor
+    },
+    start/.style={
+        rounded rectangle, text centered,
+        draw=green!60!black, thick, fill=green!10,
+        text=green!50!black
+    },
+    stop/.style={
+        rounded rectangle, text centered,
+        draw=red!60!black, thick, fill=red!10,
+        text=red!50!black
+    },
+    data io/.style={
+        trapezium,
+        trapezium left angle=70,
+        trapezium right angle=110,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    },
+    decision/.style={
+        diamond, aspect=2,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    },
+    process/.style={
+        rectangle, text centered,
+        draw=black, fill=\nodefillcolor
+    },
+    manual input/.style={
+        shape=trapezium,
+        shape border rotate=90,
+        trapezium left angle=90,
+        trapezium right angle=80,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    },
+    multi-document/.style={
+        shape=tape,
+        tape bend top=none,
+        double copy shadow,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    },
+    arrow/.style={thick,->,>=stealth}
+}
+
+\makeatletter
+\pgfdeclareshape{display_shape}{
+    \inheritsavedanchors[from=signal]
+    \inheritanchorborder[from=signal]
+    \inheritanchor[from=signal]{center}
+    \inheritanchor[from=signal]{north}
+    \inheritanchor[from=signal]{south}
+    \inheritanchor[from=signal]{west}
+    \inheritanchor[from=signal]{east}
+    \backgroundpath{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \west \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc-10pt}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfsetcornersarced{\pgfpoint{10pt}{10pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+        \pgfsetcornersarced{\pgfpoint{0pt}{0pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathclose
+    }
+}
+\makeatother
+\tikzset{
+    display/.style={
+        shape=display_shape,
+        signal to=nowhere, signal from=nowhere,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    }
+}
+
+\makeatletter
+\pgfdeclareshape{preparation_shape}{
+    \inheritsavedanchors[from=signal]
+    \inheritanchorborder[from=signal]
+    \inheritanchor[from=signal]{center}
+    \inheritanchor[from=signal]{north}
+    \inheritanchor[from=signal]{south}
+    \inheritanchor[from=signal]{west}
+    \inheritanchor[from=signal]{east}
+    \inheritanchor[from=signal]{width}
+    \anchor{west}{
+        \pgf@anchor@signal@west
+        \advance\pgf@x by -10pt
+    }
+    \anchor{east}{
+        \pgf@anchor@signal@east
+        \advance\pgf@x by 10pt
+    }
+    \anchor{width}{
+        \pgf@anchor@signal@width
+        \advance\pgf@x by 20pt
+    }
+    \backgroundpath{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \west \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc-10pt}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \east \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xc+10pt}{\pgf@yc}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathclose
+    }
+}
+\makeatother
+\tikzset{
+    preparation/.style={
+        shape=preparation_shape,
+        signal to=nowhere, signal from=nowhere,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    }
+}
+
+\makeatletter
+\pgfdeclareshape{rcomment_shape}{
+    \inheritsavedanchors[from=rectangle]
+    \inheritanchorborder[from=rectangle]
+    \inheritanchor[from=rectangle]{center}
+    \inheritanchor[from=rectangle]{north}
+    \inheritanchor[from=rectangle]{south}
+    \inheritanchor[from=rectangle]{west}
+    \inheritanchor[from=rectangle]{east}
+    \backgroundpath{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@yb=\pgf@y
+        \pgfpathmoveto{\pgfpoint{\pgf@xa +5pt}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa +5pt}{\pgf@yb}}
+    }
+}
+\makeatother
+\tikzset{
+    rcomment/.style={
+        shape=rcomment_shape, line width=0.4mm,
+        left,
+        draw=black, fill=white
+    }
+}
+
+\makeatletter
+\pgfdeclareshape{lcomment_shape}{
+    \inheritsavedanchors[from=rectangle]
+    \inheritanchorborder[from=rectangle]
+    \inheritanchor[from=rectangle]{center}
+    \inheritanchor[from=rectangle]{north}
+    \inheritanchor[from=rectangle]{south}
+    \inheritanchor[from=rectangle]{west}
+    \inheritanchor[from=rectangle]{east}
+    \backgroundpath{
+        \southwest \pgf@ya=\pgf@y
+        \northeast \pgf@xa=\pgf@x \pgf@yb=\pgf@y
+        \pgfpathmoveto{\pgfpoint{\pgf@xa -5pt}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa -5pt}{\pgf@yb}}
+    }
+}
+\makeatother
+\tikzset{
+    lcomment/.style={
+        shape=lcomment_shape, line width=0.4mm,
+        left,
+        draw=black, fill=white
+    }
+}
+
+\makeatletter
+\pgfdeclareshape{begin loop_shape}{
+    \inheritsavedanchors[from=rectangle]
+    \inheritanchorborder[from=rectangle]
+    \inheritanchor[from=rectangle]{center}
+    \inheritanchor[from=rectangle]{north}
+    \inheritanchor[from=rectangle]{south}
+    \inheritanchor[from=rectangle]{west}
+    \inheritanchor[from=rectangle]{east}
+    \anchor{north}{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \advance\pgf@y by 5pt
+        \advance\pgf@x by -0.5\pgf@xb
+        \advance\pgf@x by 0.5\pgf@xa
+    }
+    \backgroundpath{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb - 5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa +10pt}{\pgf@yb +5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb -10pt}{\pgf@yb +5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb -5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathclose
+    }
+}
+\makeatother
+\tikzset{
+    begin loop/.style={
+        shape=begin loop_shape,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    }
+}
+
+\makeatletter
+\pgfdeclareshape{end loop_shape}{
+    \inheritsavedanchors[from=rectangle]
+    \inheritanchorborder[from=rectangle]
+    \inheritanchor[from=rectangle]{center}
+    \inheritanchor[from=rectangle]{north}
+    \inheritanchor[from=rectangle]{south}
+    \inheritanchor[from=rectangle]{west}
+    \inheritanchor[from=rectangle]{east}
+    \anchor{south}{
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \advance\pgf@y by -5pt
+        \advance\pgf@x by 0.5\pgf@xb
+        \advance\pgf@x by -0.5\pgf@xa
+    }
+    \backgroundpath{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya + 5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb -10pt}{\pgf@ya -5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa +10pt}{\pgf@ya -5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya +5pt}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+        \pgfpathclose
+    }
+}
+\makeatother
+\tikzset{
+    end loop/.style={
+        shape=end loop_shape,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    }
+}
+
+\makeatletter
+\pgfdeclareshape{predefined process_shape}{
+    \inheritsavedanchors[from=rectangle]
+    \inheritanchorborder[from=rectangle]
+    \inheritanchor[from=rectangle]{center}
+    \inheritanchor[from=rectangle]{north}
+    \inheritanchor[from=rectangle]{south}
+    \inheritanchor[from=rectangle]{west}
+    \inheritanchor[from=rectangle]{east}
+    \backgroundpath{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathclose
+        \pgfpathmoveto{\pgfpoint{\pgf@xa +3pt}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa +3pt}{\pgf@yb}}
+        \pgfpathmoveto{\pgfpoint{\pgf@xb -3pt}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb -3pt}{\pgf@yb}}
+    }
+}
+\makeatother
+\tikzset{
+    predefined process/.style={
+        shape=predefined process_shape,
+        text centered,
+        draw=black, fill=\nodefillcolor
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some useful macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\mylength}
+\newcommand{\blankdate}{{\inputencoding{utf8}<<\underline{\hspace*{1cm}}>> \underline{\hspace*{3cm}} 2015\;г.}}
+\newcommand{\No}{\textnumero}
+\newcommand{\define}[1]{\overset{\text{def}}{#1}}
+\newcommand{\defeq}{\overset{\text{\rm def}}{=}}
+\newcommand{\ol}[1]{\overline{#1}}
+\renewcommand{\ul}[1]{\underline{#1}}
+\renewcommand\emph[1]{\textit{#1}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\suchthat}[1][]{\;#1|\;}
+\newcommand{\ut}[2]{\underset{#1}{#2}}
+\newcommand{\leqs}{\leqslant}
+\newcommand{\geqs}{\geqslant}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\vkappa}{\varkappa}
+\newcommand{\wt}{\widetilde}
+\newcommand{\what}{\widehat}
+\newcommand{\vphi}{\varphi}
+\DeclareMathOperator{\const}{{Const}}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\rank}{rank}
+\newcommand{\slfrac}[2]{\left.#1\middle/#2\right.}
+\newcommand{\dst}{\displaystyle}
+\newcommand{\tst}{\textstyle}
+\newcommand{\ie}{{\inputencoding{utf8}т.\,е.}\xspace}
+\newcommand{\te}{\ie}
+\newcommand{\td}{{\inputencoding{utf8}т.\,д.}\xspace}
+\newcommand{\tp}{{\inputencoding{utf8}т.\,п.}\xspace}
+\newcommand{\tch}{{\inputencoding{utf8}т.\,ч.}\xspace}
+\newcommand{\tk}{{\inputencoding{utf8}т.\,к.}\xspace}
+\newcommand{\dr}{{\inputencoding{utf8}др.}\xspace}
