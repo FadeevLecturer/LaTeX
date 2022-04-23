@@ -1,0 +1,233 @@
+\section{Таблицы}
+
+\begin{frame}[fragile]{Таблицы}
+	\small
+	Для создания таблиц используется окружение \mintinline{LaTeX}{tabular}. Обязательный аргумент окружения определяет количество столбцов, выравнивание текста внутри них и не только. Например, строка ``ccc'' определяет три столбца с выравниванием по центру (``c''~--- ``center'').  
+	\begin{itemize}
+		\item Таблица задаётся по строкам;
+		\item Строки отделяются друг от друга комбинацией ``\mintinline{LaTeX}{\\}'';
+		\item Ячейки внутри отделяются символом амперсанда ``\mintinline{LaTeX}{&}''
+	\end{itemize}
+		
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\begin{tabular}{ccc}
+				$T_{11}$ & $T_{12}$ & $T_{13}$\\
+				$T_{21}$ & $T_{22}$ & $T_{23}$ 
+			\end{tabular}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\begin{tabular}{ccc}
+				$T_{11}$ & $T_{12}$ & $T_{13}$\\
+				$T_{21}$ & $T_{22}$ & $T_{23}$ 
+			\end{tabular}
+		\end{center}
+	\end{minipage}
+
+\end{frame}
+
+\begin{frame}[fragile]{Таблицы}
+	\small
+	По умолчанию таблица рисуется без рамок. Символом ``|'' можно указать вертикальные рамки в преамбуле.
+
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\begin{tabular}{|c|c|c|}
+				$T_{11}$ & $T_{12}$ & $T_{13}$\\
+				$T_{21}$ & $T_{22}$ & $T_{23}$ 
+			\end{tabular}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\begin{tabular}{|c|c|c|}
+				$T_{11}$ & $T_{12}$ & $T_{13}$\\
+				$T_{21}$ & $T_{22}$ & $T_{23}$ 
+			\end{tabular}
+		\end{center}
+	\end{minipage}
+	
+	Горизонтальные линии рисуются командой \mintinline{TeX}{\hline}.
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$T_{11}$ & $T_{12}$ & $T_{13}$\\
+				\hline
+				$T_{21}$ & $T_{22}$ & $T_{23}$\\
+				\hline 
+			\end{tabular}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\begin{tabular}{|c|c|c|}
+				\hline
+				$T_{11}$ & $T_{12}$ & $T_{13}$\\
+				\hline
+				$T_{21}$ & $T_{22}$ & $T_{23}$\\
+				\hline 
+			\end{tabular}
+		\end{center}
+	\end{minipage}
+
+\end{frame}
+
+\begin{frame}[fragile]{Таблицы}
+	\small
+	Вместо выравнивания по центру можно указать выравнивание по левому краю символом ``\mintinline{LaTeX}{l}'' или по правому краю символом ``\mintinline{LaTeX}{r}''. Количество символов ``\mintinline{LaTeX}{l}'', ``\mintinline{LaTeX}{c}'' и ``\mintinline{LaTeX}{r}'' должно совпадать с количеством столбцов.
+
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\begin{tabular}{|l|c|r|}
+				\hline
+				L & C & R\\
+				\hline
+				LL & CC & RR\\
+				\hline
+				LLL & CCC & RRR\\
+				\hline
+			\end{tabular}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\begin{tabular}{|l|c|r|}
+				\hline
+				L & C & R\\
+				\hline
+				LL & CC & RR\\
+				\hline
+				LLL & CCC & RRR\\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Таблицы}
+	\small	
+	Команда \mintinline{LaTeX}{\multicolumn} позволяет объединять соседние ячейки одной строки между собой. У нее три обязательны аргумента: 1) количество занимаемых столбцов; 2) выравнивание текста для этой ячейки;
+	3) текст ячейки. 
+	
+	Например, \mintinline{LaTeX}{\multicolumn{3}{|c|}{abc}}~--- объединит три ячейки таблицы и напишет внутри выровненный по центру текст ``abc'' с рамками по обеим сторонам. 
+	
+	\begin{minipage}{0.74\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				\multicolumn{2}{|c|}{A} & \multicolumn{2}{|c|}{B}\\
+				\hline
+				$x_A$ & $y_A$ & $x_B$ & $y_B$ \\
+				\hline
+			\end{tabular}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.24\textwidth}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\multicolumn{2}{|c|}{A} & \multicolumn{2}{|c|}{B}\\
+			\hline
+			$x_A$ & $y_A$ & $x_B$ & $y_B$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\end{minipage}
+\end{frame}
+
+
+\begin{frame}[fragile]{Таблицы}
+	\small
+	Чтобы объединить строки столбца необходимо подключить пакет \mintinline{LaTeX}{\multirow} и использовать одноименную команду, которая имеет такие же аргументы, но второй из них отвечает за ширину ячейки.   
+	
+	\begin{minipage}{0.74\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\begin{tabular}{|c|c|}
+				\hline
+				\multirow{3}{4em}{Ячейка в\\ несколько строк} & 1\\
+				& 2 \\
+				& 3 \\
+				\hline
+			\end{tabular}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.24\textwidth}
+		\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				\multirow{3}{4em}{Ячейка в\\ несколько строк} & 1\\
+				& 2 \\
+				& 3 \\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{minipage}
+\end{frame}
+
+
+\begin{frame}[fragile]{Таблицы}
+	\small
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\begin{tabular}{ |c|c|c| } 
+			\hline
+			Модель & Выборка & Точность \\\hline
+			\multirow{2}{5em}{Линейная модель} & train & 0.95 \\\cline{2-3}
+			& test & 0.94 \\\hline 
+			\multirow{2}{5em}{Нейронная сеть} & train & 0.99 \\\cline{2-3}
+			& test & 0.5 \\ 
+			\hline
+		\end{tabular}
+	\end{minted}
+	
+	\begin{center}
+		\begin{tabular}{ |c|c|c| } 
+			\hline
+			Модель & Выборка & Точность \\\hline
+			\multirow{2}{5em}{Линейная модель} & train & 0.95 \\\cline{2-3}
+			& test & 0.94 \\\hline 
+			\multirow{2}{5em}{Нейронная сеть} & train & 0.99 \\\cline{2-3}
+			& test & 0.5 \\ 
+			\hline
+		\end{tabular}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Плавающие таблицы}
+	\small
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\begin{table}
+			\begin{tabular}{|c|c|}
+				\hline $T_1$ & $T_2$ \\\hline
+			\end{tabular}
+			\caption{Моя таблица}\label{tab:example}
+		\end{table}
+		В таблице~\ref{tab:example} приведены значения величины $T_i, \, i=1,2$.
+	\end{minted}
+	\begin{table}
+		\begin{tabular}{|c|c|}
+			\hline$T_1$ & $T_2$ \\\hline
+		\end{tabular}
+		\caption{Моя таблица}\label{tab:example}
+	\end{table}
+	В таблице~\ref{tab:example} приведены значения величины $T_i, \, i=1,2$.
+\end{frame}
+
+\begin{frame}[fragile]{Таблицы: пакет csvsimple}
+	\small
+
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\csvautotabular{tables/table.csv}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\csvautotabular{tables/table.csv}
+		\end{center}
+	\end{minipage}
+
+\end{frame}

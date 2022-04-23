@@ -1,0 +1,355 @@
+\section{Введение}
+
+\begin{frame}{\TeX}
+	\begin{quotation}
+		\TeX~--- система компьютерной вёрстки, разработанная американским профессором информатики Дональдом Кнутом в целях создания компьютерной типографии. В неё входят средства для секционирования документов, для работы с перекрёстными ссылками. В частности, благодаря этим возможностям, TeX популярен в академических кругах, особенно среди математиков и физиков.	
+	\end{quotation}
+	\begin{flushright}
+		\href{https://ru.wikipedia.org/wiki/TeXs}{Wikipedia}
+	\end{flushright}
+	
+\end{frame}
+
+\begin{frame}{\TeX{} vs. MS Word}
+	\begin{table}
+		\begin{tabular}{p{0.49\textwidth}|p{0.49\textwidth}}
+			\TeX & MS Word \\
+			\hline
+			What you see is what you mean & What you see is what you get \\
+			\hline \adv{Созданный документ выглядит одинаково на всех устройствах}& \dis{Созданный документ может выглядеть иначе на другом устройстве} \\
+			\hline
+			\adv{Удобно набирать формулы} & \dis{Неудобно набирать формулы} \\
+			\hline
+			\adv{Сравнительно легко организовать автоматическую нумерацию глав, разделов, формул, таблиц, иллюстраций и т.п, а также перекрестные ссылки на них} & \dis{Сравнительно трудоемко организовать автоматическую нумерацию глав, разделов, формул, таблиц, иллюстраций и т.п, а также перекрестные ссылки на них} \\
+			\hline \adv{Содержимое документа и его форматирование изолированы друг от друга} & \dis{Содержимое документа и его форматирование сложно изолировать друг от друга}
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\begin{frame}{\TeX{} vs. MS Word}
+	\begin{table}
+		\begin{tabular}{p{0.49\textwidth}|p{0.49\textwidth}}
+			\TeX & MS Word \\
+			\hline
+			What you see is what you mean & What you see is what you get \\
+			\hline \dis{Просмотр текста и его набор~--- разные операции} & \adv{Текст одновременно набирается и просматривается} \\
+			\hline \dis{Трудно набирать страницы со сложным макетом} & \adv{Макет страницы можно настраивать налету}
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+
+\begin{frame}[fragile]{\TeX{} из командной строки}
+	Для работы с \TeX{} необходимо установить дистрибутив, например, \href{https://miktex.org/}{MiKTeX} или \href{https://www.tug.org/texlive/}{TeXLive}. 
+	
+	После установки дистрибутива исходный текст можно скомпилировать в ``\textbf{.dvi}'' командой
+	
+	\large
+	\begin{minted}[autogobble]{ps1}
+		$ latex helloworld.tex
+	\end{minted}
+	
+	\[
+		\textbf{helloworld.tex} \longrightarrow \text{\LaTeX} \longrightarrow \textbf{helloworld.dvi}
+	\]
+	
+	А в ``\textbf{.pdf}'' командой
+	
+	\begin{minted}[autogobble]{ps1}
+		$ pdflatex helloworld.tex
+	\end{minted}
+	
+	\[
+	\textbf{helloworld.tex} \longrightarrow \text{pdf\LaTeX} \longrightarrow \textbf{helloworld.pdf}
+	\]
+\end{frame}
+
+\begin{frame}[fragile]{Редактор \LaTeX{}}
+	При этом набирать исходный текст можно почти в любом текстовом редакторе. Однако гораздо удобнее установить специальный редактор под \LaTeX. 
+	
+	Автор предпочитает редактор \href{https://www.texstudio.org/}{TeXstudio}, который поддерживает проверку и подсветку синтаксиса, автоматическое дополнение команд, выделение ошибок, предварительный просмотр и многое другое. Если установить дистрибутив \LaTeX до установки \textit{TeXstudio}, то редактор сам найдет дистрибутив и настроит трансляцию исходного кода документа в \textbf{pdf} файл.
+	
+	\begin{alertblock}{Предупреждение}
+		По умолчанию \textit{TeXstudio} ничего не знает про русский язык и будет подсвечивать каждое слово написанное на кириллице, как грамматическую ошибку. Чтобы это исправить, необходимо установить русский словарь. Инструкция доступна по ссылке. 
+	\end{alertblock}
+\end{frame}
+
+
+\begin{frame}[fragile]{Простейший документ}
+	Простейший документ выглядит примерно так.
+	\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+		\documentclass{article}
+		\begin{document}
+			Hello world, \LaTeX.
+		\end{document}
+	\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]{Документ и преамбула}
+	\begin{itemize}
+		\item Все, что идёт после \mintinline{TeX}{\documentclass{article}} но до \mintinline{TeX}{\begin{document}}, называется преамбулой документа.
+		\item Все, что идет после \mintinline{TeX}{\begin{document}} но до \mintinline{TeX}{\end{document}}, задает содержимое документа.
+		\item Все, что идет после символа \%, считается комментарием и игнорируется \LaTeX{} до конца этой строки.
+	\end{itemize}
+	
+	
+	
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+		\documentclass{article}
+		% preambule
+		% комментарий в преамбуле
+		\begin{document}
+			% content
+			% комментарий в документе
+		\end{document}
+	\end{minted}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Преамбула}
+	В преамбуле задаётся стиль документа и подключаются пакеты. Например, для того, чтобы использовать кириллицу в \LaTeX, необходимо подключить пару пакетов.
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+		\documentclass{article}
+		
+		\usepackage[T2A]{fontenc}
+		\usepackage[utf8]{inputenc}
+		\usepackage[russian]{babel}
+		
+		\begin{document}
+			Привет мир, \LaTeX.
+		\end{document}
+	\end{minted}
+		
+\end{frame}
+
+
+\begin{frame}[fragile]{Преамбула}
+	Ещё пара пакетов имеет смысл импортировать по-умолчанию, если вы планируете набирать формулы. 
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{LaTeX}
+		\documentclass{article}
+		
+		\usepackage[T2A]{fontenc}
+		\usepackage[utf8]{inputenc}
+		\usepackage[russian]{babel}
+		
+		\usepackage{amsmath}
+		\usepackage{amssymb}
+		
+		\begin{document}
+			Привет мир, \LaTeX.
+		\end{document}
+	\end{minted}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Набор текста}
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+			Слова   разделяются пробелами,
+			а           абзацы ---
+			        пустыми строками.
+			
+			Абзацный отступ в исходном
+			      тексте     оставлять
+			             не
+			        надо: он получается
+			автоматически.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\parindent=1cm
+		Слова разделяются пробелами,
+		а абзацы ---
+		пустыми строками.
+		
+		Абзацный отступ в исходном
+		тексте оставлять
+		не
+		надо: он получается
+		автоматически.
+	\end{minipage}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Специальные символы}
+	\large
+	\input{intro/specsymb.tex}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Простейшие команды}
+	Команды начинаются с символа ``\mintinline{TeX}{\}''. Самые простейшие команды позволяют напечатать некоторые специальные символы в их исходном виде. 
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+			Курс тугрика повысился на 7\%, 
+			и теперь за него дают \$200.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		Курс тугрика повысился на 7\%, и теперь за него дают \$200.
+	\end{minipage}
+
+	Остальные команды состоят из символов латинского алфавита. Например, команда \mintinline{TeX}{\TeX} печатает символ \TeX. Ещё, например, есть команды меняющие шрифт текста.
+	
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+		Этот текст обычного размера, \Large а этот более крупного.
+	\end{minted}
+	
+	Этот текст обычного размера, \Large а этот более крупного.
+\end{frame}
+
+\begin{frame}[fragile]{Простейшие команды}
+	Команды начинаются с символа ``\mintinline{TeX}{\}''. Самые простейшие команды позволяют напечатать некоторые специальные символы в их исходном виде. 
+		
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+			Курс тугрика повысился на 7\%, 
+			и теперь за него дают \$200.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		Курс тугрика повысился на 7\%, и теперь за него дают \$200.
+	\end{minipage}
+	
+	Остальные команды состоят из символов латинского алфавита. Например, команда \mintinline{TeX}{\TeX} печатает символ \TeX. Ещё, например, есть команды меняющие шрифт текста.
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{LaTeX}
+		Полужирный шрифт начнется с \bfseries этого слова. Снова \mdseries светлый, 
+		теперь \slshape наклонный, до нового переключения; вновь \upshape прямой..
+	\end{minted}
+	
+	Полужирный шрифт начнется с \bfseries этого слова. Снова \mdseries светлый, теперь \slshape наклонный, до нового переключения; вновь \upshape прямой..
+\end{frame}
+
+
+\begin{frame}[fragile]{Простейшие команды}
+	Команды начинаются с символа ``\mintinline{TeX}{\}''. Самые простейшие команды позволяют напечатать некоторые специальные символы в их исходном виде. 
+		
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+			Курс тугрика повысился на 7\%, 
+			и теперь за него дают \$200.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		Курс тугрика повысился на 7\%, и теперь за него дают \$200.
+	\end{minipage}
+	
+	Остальные команды состоят из символов латинского алфавита. Например, команда \mintinline{TeX}{\TeX} печатает символ \TeX. Ещё, например, есть команды меняющие шрифт текста.
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{LaTeX}
+		Полужирный шрифт начнется с \bfseries этого слова. Снова \mdseries светлый, 
+		теперь \slshape наклонный, до нового переключения; вновь \upshape прямой..
+	\end{minted}
+	
+	Полужирный шрифт начнется с \bfseries этого слова. Снова \mdseries светлый, теперь \slshape наклонный, до нового переключения; вновь \upshape прямой.
+\end{frame}
+
+
+\begin{frame}[fragile]{Группы}
+	Группы обозначаются парой фигурных скобок. Некоторые команды действуют в группах локально.
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+			Полужирным шрифтом набрано только 
+			{\bfseries это} слово; после 
+			скобок все идет, как прежде.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		Полужирным шрифтом набрано только {\bfseries это}
+		слово; после скобок все идет, как прежде.
+	\end{minipage}
+
+	Как правило, по выходу из группы модифицирующие команды сбрасываются.
+	
+	\begin{minipage}{0.54\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+			Сначала {переключим шрифт на 
+			\itshape курсив; теперь сделаем 
+			шрифт еще и {\bfseries полужирным;}
+			посмотрите, как восстановится} шрифт
+			после кон{ца г}руппы.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		Сначала {переключим шрифт на 
+		\itshape курсив; теперь сделаем 
+		шрифт еще и {\bfseries полужирным;}
+		посмотрите, как восстановится} шрифт
+	после кон{ца г}руппы.
+	\end{minipage}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Команды с аргументами}
+	Обязательные аргументы указываются у команды в фигурных скобках, необязательные в квадратных.
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+		\documentclass[12pt,twocolumn]{book}
+	\end{minted}
+	
+	Здесь 
+	\begin{itemize}
+		\item \mintinline{TeX}{\documentclass}~--- команда;
+		\item \mintinline{TeX}{book}~--- обязательный аргумент;
+		\item \textcolor{optargs}{\mintinline{TeX}{12pt}} и \textcolor{optargs}{\mintinline{TeX}{twocolumn}}~--- необязательные аргументы;
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Окружения}
+	Ещё одна важная конструкция в \LaTeX~--- окружения (environment). 
+	
+	Окружение начинается с команды \mintinline{TeX}{\begin{имя_окружения}}, а заканчивается командой \mintinline{TeX}{\end{имя_окружения}}. Например, все содержимое документа задаётся в окружении \mintinline{TeX}{document}.
+	
+	\begin{minipage}{0.69\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+			\begin{center}
+				Все строки этого абзаца будут центрированы; 
+				переносов не будет, если только какое-то 
+				слово, как в дезоксирибонуклеиновой кислоте, 
+				не длинней строки.
+			\end{center}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.29\textwidth}
+		\begin{center}
+				Все строки этого абзаца будут
+				центрированы; переносов не будет,
+				если только какое-то слово,
+				как в дезоксирибонуклеиновой
+				кислоте, не длинней строки.
+		\end{center}
+	\end{minipage}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Автоматическая генерация ссылок}
+	Команда \mintinline{TeX}{\label} создаёт метку, на которую потом можно создать перекрестную ссылку. Команда \mintinline{TeX}{\pageref} подставит номер страницы, на которой располагается указанная метка.
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single]{LaTeX}
+		\textbf{Теорема Пифагора.}\label{pythagoras} В прямоугольном 
+		треугольнике квадрат гипотенузы равен сумме квадратов катетов.
+		
+		Из теоремы Пифагора (см. с.~\pageref{pythagoras}) получаем, что длина
+		гипотенузы равна $\sqrt{3^2 + 4^2}=5$.	
+	\end{minted}
+	
+	\textbf{Теорема Пифагора.}\label{pythagoras} В прямоугольном треугольнике квадрат гипотенузы равен сумме квадратов катетов.
+	
+	Из теоремы Пифагора (см. с.~\ref{pythagoras}) получаем, что длина гипотенузы равна $\sqrt{3^2 + 4^2}=5$.
+	
+\end{frame}

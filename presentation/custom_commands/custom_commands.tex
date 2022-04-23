@@ -1,0 +1,223 @@
+\section{Пользовательские команды}
+
+\begin{frame}[fragile]{Определение пользовательских функций}
+
+	В \LaTeX{} нет встроенных команд для принятых в России сокращений ряда функций. Например, действительная часть комплексного числа обозначается зарубежом $\Re(z)$ (\mintinline{LaTeX}{$\Re(z)$}), а комплексная часть $\Im(z)$ (\mintinline{LaTeX}{$\Im(z)$}). В России же приняты обозначения $\re z$ и $\im z$, но соответствующих команд в \LaTeX{} нет.
+	
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			$Re z$
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$Re z$
+		\end{center}
+	\end{minipage}
+	
+	Не должно быть наклона. \mintinline{LaTeX}{\mathsf} позволяет писать прямым шрифтом.
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			$\mathsf{Re} z$
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$\mathsf{Re} z$
+		\end{center}
+	\end{minipage}
+
+	Между функцией и её аргументом должен быть небольшой пробел.  \mintinline{LaTeX}{\mathop} решает эту проблему.
+
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			$\mathop{\mathsf{Re}} z$
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$\mathop{\mathsf{Re}} z$
+		\end{center}
+	\end{minipage}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Определение пользовательских функций}
+	Если в тексте часто встречается взятие действительной части комплексного числа, то писать каждый раз \mintinline{LaTeX}{\mathop{\mathsf{Re}}} становится утомительно и чревато ошибками.  Это самая простая ситуация, когда полезно определить команду для пользовательской функции командой \mintinline{LaTeX}{\DeclareMathOperator{cmd}{text}} \textbf{в преамбуле документа}.
+	\begin{minted}[autogobble, frame=single]{TeX}
+		% preambule
+		\DeclareMathOperator{\re}{Re}
+		\DeclareMathOperator{\im}{Im}
+	\end{minted}
+	
+	Указав две строки выше \textbf{в преамбуле}, можно в тексте использовать команды \mintinline{LaTeX}{\re} и \mintinline{LaTeX}{\im}.
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			$z = \re z + i \im z$ 
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$z = \re z + i \im z$
+		\end{center}	 
+	\end{minipage}		
+\end{frame}
+
+
+\begin{frame}[fragile]{Определение пользовательских команд}
+	
+	Комманда \mintinline{LaTeX}{\newcommand} позволяет определять пользовательские команды-макросы. Например, рассмотрим символ $\stackrel{\mathrm{def}}{=}$, который получается с помощью выражения \mintinline{LaTeX}{\stackrel{\mathrm{def}}{=}}.
+	
+	\begin{minipage}{0.69\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			$x^2\stackrel{\mathrm{def}}{=} x \cdot x$
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.29\textwidth}
+		\begin{center}
+			$x^2\eqdef x \cdot x$
+		\end{center}
+	\end{minipage}
+	
+	 Следующей командой в преамбуле документа определяется новая команда \mintinline{LaTeX}{\eqdef}, которая эквивалента сочетанию \mintinline{LaTeX}{\stackrel{\mathrm{def}}{=}}:
+
+	\begin{minted}[autogobble, frame=single]{TeX}
+		% preambule
+		\newcommand{\eqdef}{\stackrel{\mathrm{def}}{=}}
+	\end{minted}
+
+	Это сокращает запись предыдущей формулы.
+	
+	\begin{minipage}{0.69\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			$x^2\eqdef x \cdot x$
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.29\textwidth}
+		\begin{center}
+			$x^2\eqdef x \cdot x$
+		\end{center}
+	\end{minipage}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Определение пользовательских команд}
+	Так, например, команда  \mintinline{LaTeX}{\DeclareMathOperator} на самом деле под капотом работает превращается в \mintinline{LaTeX}{\newcommand} с небольшими изменениями в аргумент. Например, следующее определение для действительной части комплексного числа 
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		\DeclareMathOperator{\re}{Re}
+	\end{minted}
+	\vspace{-0.3cm}
+	в точности соответствует 
+	\begin{minted}[autogobble, frame=single]{TeX}
+		\newcommand{\re}{\mathop{\mathrm{Re}}\nolimits}
+	\end{minted}
+	
+	Здесь \mintinline{LaTeX}{\nolimits} влияет на то, как будут отображаться индексы, что в данном случае не принципиально. 
+	
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline 
+			\mintinline{LaTeX}{\nolimits} & \mintinline{LaTeX}{\limits} \\
+			\hline
+			$\re_i^j$ & $\mathop{\mathsf{Re}}\limits_i^j$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Определение пользовательских команд}
+	Предположим, что в тексте часто встречается действительная ось $\mathbb{R}$, которая получается командой \mintinline{LaTeX}{\mathbb{R}} и мы хотим определить команду \mintinline{LaTeX}{\R} для этого. 
+	
+	Такая команда будет работать только внутри формулы.
+	\begin{minted}[autogobble, frame=single]{TeX}
+		\newcommand{\R}{\mathbb{R}}
+	\end{minted}
+
+	Такая~--- только снаружи.
+	\begin{minted}[autogobble, frame=single]{TeX}
+		\newcommand{\R}{$\mathbb{R}$}
+	\end{minted}
+	
+	А такая~--- везде.
+	\begin{minted}[autogobble, frame=single]{TeX}
+		\newcommand{\R}{\ensuremath{\mathbb{R}}}
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Пользовательские команды с аргументами}
+	Можно определять и команды с аргументами. Тогда необходимо указать количество аргументов в квадратных скобках, а ссылаться на них внутри команды можно с помощью символа ``\#'' и порядкового номера после неё.
+	
+	Например, следующее определение 
+	\begin{minted}[autogobble, frame=single]{TeX}
+		% preambule
+		\newcommand{\ton}[1]{1, 2, \dots, #1}
+	\end{minted}
+	сокращает запись формул вида
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Здесь $a_ij, i=\ton{n},\, j=\ton{m}$~--- элементы матрицы $A$.
+	\end{minted}
+	Здесь $a_{ij},\, i=\ton{n},\, j=\ton{m}$~--- элементы матрицы $A$.	
+\end{frame}
+
+\begin{frame}[fragile]{Пользовательские команды с аргументами}
+
+	Запись уравнений в частных производных значительно упрощается, если определить команду \mintinline{LaTeX}{\dd} следующим образом.
+	\begin{minted}[autogobble, frame=single]{TeX}
+		% preambule
+		\newcommand{\dd}[2]{\dfrac{\partial #1}{\partial #2}}
+	\end{minted}
+	
+	Тогда уравнение $\dd{\psi}{t} + u\dd{\psi}{x}=0$ набирается с помощью 
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+			$\dd{\psi}{t} + u\dd{\psi}{x}=0$
+	\end{minted}
+	
+	вместо 
+	
+	\begin{minted}[autogobble, frame=single, fontsize=\small]{TeX}
+		$\dfrac{\partial\psi}{\partial t} + u\dfrac{\partial\psi}{\partial x} = 0$
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Переопределение команды}
+	Если команда с таким именем уже существует, то попытка переопределить её через \mintinline{LaTeX}{\newcommand} приведет к ошибке. Если все же есть такая необходимость, то можно воспользоваться альтернативной командой \mintinline{LaTeX}{\renewcommand}.
+	
+	Например, в русскоязычных текстах часто переопределяют команды \mintinline{LaTeX}{\le} и \mintinline{LaTeX}{\ge} на \mintinline{LaTeX}{\leqslant} и \mintinline{LaTeX}{\geslant} соответственно.
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			Пусть $x\ge0$ и $y\le0$.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			Пусть $x\ge0$ и $y\le0$.
+		\end{center}
+	\end{minipage}
+
+	\begin{minted}[autogobble, frame=single]{TeX}
+		% preambule
+		\renewcommand{\le}{\leqslant}
+		\renewcommand{\ge}{\geqslant}
+	\end{minted}
+
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			Пусть $x\ge0$ и $y\le0$.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			Пусть $x\geqslant0$ и $y\leqslant0$.
+		\end{center}
+	\end{minipage}
+	
+\end{frame}

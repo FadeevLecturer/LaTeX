@@ -1,0 +1,33 @@
+\documentclass[russian, unicode, xcolor={dvipsnames}, aspectratio=169]{beamer}
+% handout - to disable overlays
+\input{packages}
+\input{commands}
+\usetheme{metropolis}
+\title{Система компьютерной верстки \LaTeX}
+\author{Фадеев~Е.П.}
+\institute{МГУ $\bullet$ Физический факультет}
+\date{2022}
+\titlegraphic{
+	\raggedleft
+	\href{https://github.com/FadeevLecturer/LaTeX}{\includegraphics[width=0.2\textwidth]{pictures/github.png}}
+}
+
+
+
+
+\begin{document}
+
+\maketitle
+	
+\include{intro/intro.tex}
+	
+\include{formulas/formulas.tex}
+   
+\include{custom_commands/custom_commands.tex}   
+
+\include{tables/tables.tex}
+
+\include{pictures/pictures.tex}
+
+
+\end{document}

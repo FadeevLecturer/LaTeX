@@ -1,0 +1,1137 @@
+\section{Набор формул}
+
+\subsection{Вид формул}
+
+\begin{frame}[fragile]{Включенные и выключенные формулы}
+	
+	Формулы бывают внутри текста (<<включенные>>) и выделенные в отдельную строку (<<выключенные>>).
+	
+	$\bullet$ \textbf{Включенные} формулы набираются между одинарных знаков \mintinline{TeX}{$} или между пары скобок вида \mintinline{TeX}{\(\)}.
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Оказалось, что $y$ вдвое больше, чем \(x\): $y=2x$.
+	\end{minted}
+	Оказалось, что $y$ вдвое больше, чем \(x\): $y=2x$.
+	
+	$\bullet$ \textbf{Выключенные} формулы набираются, например, между двойных знаков \mintinline{TeX}{$$}.
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Оказалось, что $y$ вдвое больше, чем $x$: $$y=2x.$$
+	\end{minted}
+	Оказалось, что $y$ вдвое больше, чем $x$: $$y=2x.$$
+	
+\end{frame}
+
+\begin{frame}[fragile]{Выключенные формулы}
+	
+	Также выключенные формулы можно набирать с помощью скобок \mintinline{TeX}{\[\]}. 
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=4, frame=single]{TeX}
+			Оказалось, что $y$ вдвое больше, 
+			чем $x$: \[y=2x.\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		Оказалось, что $y$ вдвое больше, чем $x$: \[y=2x.\]
+	\end{minipage}
+
+	
+	\noindent\rule{\textwidth}{1pt}
+	А также окружений \mintinline{TeX}{equation} и \mintinline{TeX}{equation*}.
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=4, frame=single]{TeX}
+			Оказалось, что $y$ вдвое больше, 
+			чем $x$: 
+			\begin{equation*}
+				y=2x.
+			\end{equation*}
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		Оказалось, что $y$ вдвое больше, 
+		чем $x$: 
+		\begin{equation*}
+			y=2x.
+		\end{equation*}
+	\end{minipage}
+	
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Автоматическая нумерация выключенных формул}
+
+	Окружение \mintinline{Tex}{equation} без звездочки автоматически нумерует формулу, что позволяет делать перекрестные ссылки, если поставить внутри формулы метку.
+	
+	\begin{minted}[autogobble, tabsize=4, frame=single, fontsize=\small]{TeX}
+		Оказалось, что $y$ вдвое больше, чем $x$: 
+		\begin{equation}\label{eq}
+			y=2x.
+		\end{equation}
+	
+		Если $x=0.5$, то по формуле \eqref{eq} со страницы \pageref{eq} 
+		находим, что $y=1$.
+	\end{minted}
+	\label{eqpage}Оказалось, что $y$ вдвое больше, чем $x$: 
+	\begin{equation}\label{eq}
+		y=2x.
+	\end{equation}
+	
+	Если $x=0.5$, то по формуле \eqref{eq} со страницы \ref{eqpage} находим, что $y=1$.
+\end{frame}
+
+%\subsection{Индексы и степени}
+
+\begin{frame}[fragile]{Индексы}
+	\Large
+	
+	Нижние индексы в формулах указываются после символа ``\mintinline{TeX}{_}''.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x_1$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x_1$
+		\end{center}
+	\end{minipage}
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x_i+1$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x_i+1$
+		\end{center}
+	\end{minipage}
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x_{i+1}$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x_{i+1}$
+		\end{center}
+	\end{minipage}
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x_{i_j}$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x_{i_j}$
+		\end{center}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Степени}
+	\Large
+	
+	Степени или верхние индексы в формулах указываются после символа ``\mintinline{TeX}{^}''.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x^2$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x^2$
+		\end{center}
+	\end{minipage}
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x^2n$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x^2n$
+		\end{center}
+	\end{minipage}
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x^{2n}$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x^{2n}$
+		\end{center}
+	\end{minipage}
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x^{n^2}$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x^{n^2}$
+		\end{center}
+	\end{minipage}
+\end{frame}
+
+
+\begin{frame}[fragile]{Степени и индексы. Примеры}
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Катеты $a$, $b$ треугольника связаны с его гипотенузой $c$
+		формулой $c^2=a^2+b^2$ (см. с.~\pageref{pythagoras}).
+	\end{minted}
+	
+	Катеты $a$, $b$ треугольника связаны с его гипотенузой $c$
+	формулой $c^2=a^2+b^2$ (см. с.~\ref{pythagoras}).
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Из теоремы Ферма следует, что уравнение \[x^{4357}+y^{4357}=z^{4357}\]
+		не имеет решений в натуральных числах.
+	\end{minted}
+	
+	Из теоремы Ферма следует, что уравнение
+	\[
+	x^{4357}+y^{4357}=z^{4357}
+	\]
+	не имеет решений в натуральных числах.
+\end{frame}
+
+
+\begin{frame}[fragile]{Степени и индексы. Примеры}
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Катеты $a$, $b$ треугольника связаны с его гипотенузой $c$
+		формулой $c^2=a^2+b^2$ (см. с.~\pageref{pythagoras}).
+	\end{minted}
+	
+	Катеты $a$, $b$ треугольника связаны с его гипотенузой $c$
+	формулой $c^2=a^2+b^2$ (см. с.~\ref{pythagoras}).
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Из теоремы Ферма следует, что уравнение \[x^{4357}+y^{4357}=z^{4357}\]
+		не имеет решений в натуральных числах.
+	\end{minted}
+	
+	Из теоремы Ферма следует, что уравнение
+	\[
+	x^{4357}+y^{4357}=z^{4357}
+	\]
+	не имеет решений в натуральных числах.
+\end{frame}
+
+\begin{frame}[fragile]{Дроби}
+	
+	Самая простая дробь записывается с помощью знака деления ``\mintinline{TeX}{/}''.
+	
+	\begin{minipage}{0.39\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			Решая уравнение $2x=1$, 
+			получаем $x=1/2$. 
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.59\textwidth}
+		Решая уравнение $2x=1$, получаем $x=1/2$. 
+	\end{minipage}
+	
+	Для записи дробей используются команды \mintinline{TeX}{\frac} имеющая два обязательных параметра: числитель и знаменатель дроби. \mintinline{TeX}{\frac} сжимает дробь, чтобы она не вылезала за пределы строки, её аналог \mintinline{TeX}{\dfrac} нет, но это может привести к увеличению междустрочного интервала.
+	
+	\begin{minipage}{0.39\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			Решая уравнение $2x=1$, 
+			получаем $x=\frac{1}{2}$. 
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.59\textwidth}
+		Решая уравнение $2x=1$, получаем $x=\frac{1}{2}$. 
+	\end{minipage}
+
+	\begin{minipage}{0.39\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			Решая уравнение $2x=1$, 
+			получаем $x=\dfrac{1}{2}$. 
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.59\textwidth}
+		Решая уравнение $2x=1$, получаем $x=\dfrac{1}{2}$. 
+	\end{minipage}
+\end{frame}
+
+
+\begin{frame}[fragile]{Корни}
+	\Large
+	Корни набираются с помощью команды \mintinline{TeX}{\sqrt}. Обязательный аргумент~--- подкоренное выражение, необязательный аргумент~--- показатель корня.
+	
+	\begin{minted}[autogobble, frame=single]{TeX}
+		По общепринятому соглашению, $\sqrt[3]{x^3}=x$, 
+		но $\sqrt{x^2}=|x|$.
+	\end{minted}
+
+	По общепринятому соглашению, $\sqrt[3]{x^3}=x$, но $\sqrt{x^2}=|x|$.
+
+\end{frame}
+
+\begin{frame}[fragile]{Штрихи}
+	Штрихи (например, для обозначения производной) вводятся символом одинарной кавычки ``\textcolor{Green}{\mintinline{TeX}{'}}''.
+	
+	\begin{minipage}{0.59\textwidth}
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Согласно формуле Лейбница,
+		\[
+		(fg)''=f''g+2f'g'+fg''.
+		\]
+		Это похоже на формулу квадрата суммы.
+	\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		Согласно формуле Лейбница,
+		\[
+		(fg)''=f''g+2f'g'+fg''.
+		\]
+		Это похоже на формулу квадрата суммы.
+	\end{minipage}
+
+	Команда \mintinline{TeX}{\prime} печатает такой  штрих: $\prime$. Постановка одинарной кавычки в формуле эквивалента возведению в степень \mintinline{TeX}{\prime}. 
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x'$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x'$
+		\end{center}
+	\end{minipage}
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x^\prime$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			$x^\prime$
+		\end{center}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Многоточия}
+	Команда \mintinline{TeX}{\cdots} печатает символы по центру строки ($\cdots$), а команда \mintinline{TeX}{\ldots} снизу ($\ldots$).
+	
+	\begin{minipage}{0.59\textwidth}
+		\begin{minted}[autogobble, frame=single]{TeX}
+			В~детстве К.-Ф.~Гаусс придумал,
+			как быстро найти сумму
+			\[
+			1+2+\cdots+100=5050;
+			\]
+			это случилось, когда школьный
+			учитель задал классу найти
+			сумму чисел $1,2,\ldots,100$.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		В~детстве К.-Ф.~Гаусс придумал,
+		как быстро найти сумму
+		$$
+		1+2+\cdots+100=5050;
+		$$
+		это случилось, когда школьный
+		учитель задал классу найти
+		сумму чисел $1,2,\ldots,100$.
+	\end{minipage}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Общее для формул}
+	
+	\begin{itemize}
+		\item Все буквы в формуле воспринимаются как отдельные символы и по умолчанию пишутся наклонным курсивным шрифтом:  
+		
+		\begin{minipage}{0.44\textwidth}
+			\mintinline{LaTeX}{Сравните sin и $sin$.}
+		\end{minipage}
+		\begin{minipage}{0.44\textwidth}
+			\begin{center}
+				Сравните sin и $sin$.
+			\end{center}
+		\end{minipage} 
+		
+		\item Менять шрифт в формуле можно, например, командой \mintinline{TeX}{\mathrm}:
+		
+		\begin{minipage}{0.44\textwidth}
+			\mintinline{LaTeX}{Сравните $sin$ и $\mathrm{sin}$.}
+		\end{minipage}
+		\begin{minipage}{0.44\textwidth}
+			\begin{center}
+				Сравните $sin$ и $\mathrm{sin}$.
+			\end{center}
+		\end{minipage}
+		
+		\item \LaTeX{} игнорирует все пробелы в формулах.
+		
+		\begin{minipage}{0.44\textwidth}
+			\begin{minted}[autogobble, frame=single]{TeX}
+				Формула $y      =   2      x$
+				~--- тоже самое, что и 
+				формула $y=2x$. 
+			\end{minted}
+		\end{minipage}
+		\begin{minipage}{0.44\textwidth}
+				Формула $y      =   2      x$
+				~--- тоже самое, что и 
+				формула $y=2x$.
+		\end{minipage}
+		\item Можно расставлять пробелы разного размера в формулах в ручную командами 
+		\mintinline{TeX}{\quad, \qquad, \,,\:, \;, \!}.
+		
+		\item В выключенным формулах \LaTeX{} игнорирует все переносы строк. В включенных формулах допускается один перенос подряд.
+	\end{itemize}
+
+	 
+	
+	
+\end{frame}
+
+
+\subsection{Символы греческого алфавита}
+
+\begin{frame}{Символы греческого алфавита}
+	
+	Для каждого символа греческого алфавита есть своя команда.
+	
+	\large
+	
+	\input{formulas/greeks_lowercase.tex}
+		
+	\normalfont
+	
+	\begin{exampleblock}{Замечание}
+		Эти команды работают только внутри формул.
+	\end{exampleblock}
+	
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]{Символы греческого алфавита}
+
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Пусть $\alpha$, $\beta$ и $\gamma$~--- углы треугольника, тогда
+		\[
+		\alpha + \beta + \gamma = \pi.
+		\]
+	\end{minted}
+
+	\Large
+	Пусть $\alpha$, $\beta$ и $\gamma$~--- углы треугольника, тогда
+	\[
+		\alpha + \beta + \gamma = \pi.
+	\]
+	
+\end{frame}	
+
+\begin{frame}{Символы греческого алфавита}
+	Некоторые символы имеют несколько вариантов написания.
+	
+	\large
+	
+	\input{formulas/greeks_ru_vs_en.tex}
+	
+\end{frame}
+
+\begin{frame}{Символы греческого алфавита}
+	Команды для прописных символов греческого алфавита начинаются с прописных букв, если их начертание не совпадает с прописными символами латинского алфавита.
+	\large
+	
+	\input{formulas/greeks_uppercase.tex}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Символы греческого алфавита}
+
+	\begin{minted}[autogobble, frame=single]{TeX}
+		Начертание прописного символа $\alpha$ совпадает с заглавной буквой
+		латинского алфавита $A$. Символа $\sigma$ в прописном варианте имеет
+		вид $\Sigma$ и не имеет аналога в латинском алфавите. 
+		
+		В \TeX{} символы $\Sigma$ и $\Pi$ не используются для обозначения
+		операторов суммирования и произведения. 
+	\end{minted}
+
+	Начертание прописного символа $\alpha$ совпадает с заглавной буквой
+	латинского алфавита $A$. Символа $\sigma$ в прописном варианте имеет
+	вид $\Sigma$ и не имеет аналога в латинском алфавите. 
+	
+	В \TeX{} символы $\Sigma$ и $\Pi$ не используются для обозначения
+	операторов суммирования и произведения.
+\end{frame}
+
+\subsection{Бинарные операторы, операторы сравнения и стрелки}
+
+\begin{frame}[fragile=singleslide]{Бинарные операторы, операторы сравнения и стрелки}
+	\begin{center}
+		\input{formulas/binary.tex}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Бинарные операторы, операторы сравнения и стрелки}
+	\footnotesize
+	\begin{center}
+		\input{formulas/arrows.tex}
+	\end{center}
+	
+	\normalsize
+	
+	\LaTeX{} автоматически добавляет пробелы слева и справа от бинарных операторов, операторов сравнения и стрелок.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x\Leftrightarrow y$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\Large
+		$x\Leftrightarrow y$
+	\end{minipage}
+	
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$x()y$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\Large
+		$x()y$
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]{Бинарные операторы, операторы сравнения и стрелки}
+	В англоязычной литературе принято использовать $\le$ и $\ge$ (\mintinline{LaTeX}{\le} и \mintinline{LaTeX}{\ge}), а в русскоязычной $\leqslant$ и $\geqslant$ (\mintinline{LaTeX}{\leqslant} и \mintinline{LaTeX}{\geqslant}). Т.к. Дональд Кнут ориентировался в первую очередь на соотечественников, то англоязычные варианты этих знаков имеют более короткие команды.  
+	
+	Командой \mintinline{LaTeX}{\renewcommand{\le}{\leqslant}} в преамбуле файла можно подменить $\le$ на $\leqslant$ во всем документе.  
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]{Бинарные операторы, операторы сравнения и стрелки}
+
+	\mintinline{LaTeX}{\mid} тоже считается оператором. Его часто употребляют при определении множеств.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$M=\{x\in A\mid x>0\}$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		$M=\{x\in A\mid x>0\}$
+	\end{minipage}
+	
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$M=\{x\in A | x>0\}$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		$M=\{x\in A | x>0\}$
+	\end{minipage}
+	
+	\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+	Символ ``\verb|:|'' интерпретируется как оператор деления. При записи отображений необходимо использовать команду ``\verb|\colon|'' вместо  ``\verb|:|''.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$\colon$ X\to Y$}
+	
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		$f\colon X\to Y$
+	\end{minipage}
+	
+	\noindent\rule{\textwidth}{1pt}
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$f: X\to Y$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		$f: X\to Y$
+	\end{minipage}
+\end{frame}
+
+
+\begin{frame}{Операторы без пределов}
+	\Large
+	\begin{center}
+		\input{formulas/functions.tex}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Операторы без пределов}
+	Все операторы с предыдущего слайда несут свойство \mintinline{TeX}{\nolimits}. Это значит, что если у них поставить индексы, то они появятся в обычном месте, как нижний индекс или как степень.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$\log_{10} x =  \dfrac{\ln x}{\ln 10}$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\Large
+			$\log_{10} x =  \dfrac{\ln x}{\ln 10}$
+		\end{center}
+	\end{minipage}
+
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$\exp^{-1}x =  \ln x$}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\Large
+			$\exp^{-1}x =  \ln x$
+		\end{center}
+	\end{minipage}
+
+	Ещё эти операторы ставят небольшой пробел между функцией и её аргументом.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{Сравните $\sin x$ и $\mathrm{sin}x$.}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\Large
+			Сравните $\sin x$ и $\mathrm{sin}x$.
+		\end{center}
+	\end{minipage}
+	
+	Команда \mintinline{TeX}{\operatorname} позволяет создать функцию для одноразового применения.
+	
+	\begin{minipage}{0.49\textwidth}
+		\mintinline{LaTeX}{$\operatorname{arccot}x$.}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\begin{center}
+			\Large
+			$\operatorname{arccot}x$.
+		\end{center}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Операторы с пределами}
+	\large
+	\begin{center}
+		\input{formulas/operators.tex}
+	\end{center}
+	
+	\normalsize
+	\vspace{-0.5cm}
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+			\sum_{k=1}^\infty \frac{1}{k^2}
+			= \frac{\pi^2}{6}
+			\]
+			Формулы внутри текста, такие как 
+			$\sum_{k=1}^\infty\frac{1}{k^2} 
+			= \frac{\pi^2}{6}$,
+			занимают меньше места по~высоте.
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\Large
+		\[
+		\sum_{k=1}^\infty \frac{1}{k^2}
+		= \frac{\pi^2}{6}
+		\]
+		Формулы внутри текста, такие как 
+		$\sum_{k=1}^\infty\frac{1}{k^2} = \frac{\pi^2}{6}$,
+		занимают меньше места по~высоте.
+	\end{minipage}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Операторы с пределами}
+	Можно все равно заставить выводить индексы в качестве пределов, явно указав пределы после команды \mintinline{TeX}{\limits}.
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		Сумма первых $n$ натуральных чисел выражается формулой 
+		$\sum\limits_{i=1}^n i = \dfrac{n(n+1)}{2}$.  
+	\end{minted}
+	
+	
+	Сумма первых $n$ натуральных чисел выражается формулой $\sum\limits_{i=1}^n i = \dfrac{n(n+1)}{2}$.
+	
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Операторы с пределами}
+	\Large
+	\begin{center}
+		\input{formulas/integrals.tex}
+	\end{center}
+	
+	\normalsize
+	
+	У знака интеграла пределы появляются сбоку вне зависимости от режима.
+	
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+			\int_a^b f(x)\,dx
+			\] 
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\Large
+		\[
+		\int_a^b f(x)\,dx
+		\]
+	\end{minipage}
+	
+	\begin{exampleblock}{Замечание}
+		``\mintinline{TeX}{\,}'' необходимо в формуле, чтобы поставить правильный пробел между $f(x)$ и $dx$.
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{Разные символы}
+	\begin{center}
+		\input{formulas/etc.tex}
+	\end{center}
+	
+
+	\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+		\[
+			\dfrac{\partial f(x,y)}{\partial x} =
+			\lim_{\Delta x \to 0}\dfrac{f(x + \Delta x,y) - f(x, y)}{\Delta x}
+		\] 
+	\end{minted}
+
+	\Large
+	\[
+		\dfrac{\partial f(x, y)}{\partial x} = \lim_{\Delta x\to0} \dfrac{f(x + 	\Delta x, y) - f(x, y)}{\Delta x}
+	\] 
+\end{frame}
+
+
+\begin{frame}[fragile]{Скобки}
+	\begin{center}
+		\input{formulas/braces.tex}
+	\end{center}
+	
+	\begin{minipage}{0.74\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+			\|\vec{x}-\vec{y}\|_2^2 = \sum_{i=1}^n (x_i - y_i)^2  
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.25\textwidth}
+		\[
+			\|\vec{x}-\vec{y}\|_2^2 = \sum_{i=1}^n (x_i - y_i)^2  
+		\]
+	\end{minipage}
+	
+	\begin{minipage}{0.74\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+			\|\vec{x}-\vec{y}\|_1^2 = \sum_{i=1}^n |x_i - y_i|  
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.25\textwidth}
+		\[
+		\|\vec{x}-\vec{y}\|_1^2 = \sum_{i=1}^n |x_i - y_i|  
+		\]
+	\end{minipage}
+	
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Скобки}
+	Команды \mintinline{TeX}{\left} и \mintinline{TeX}{\right} позволяют автоматически подбирать размер скобки под габариты содержимого между ними. 
+	
+	\begin{minipage}{0.72\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+			e = \lim_{n\to\infty}(1 + \dfrac{1}{n})^n
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.27\textwidth}
+		\Large
+		\[
+		e = \lim_{n\to\infty}(1 + \dfrac{1}{n})^n
+		\]
+	\end{minipage}
+	
+	\begin{minipage}{0.72\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+			e = \lim_{n\to\infty}\left(1 + \dfrac{1}{n}\right)^n
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.27\textwidth}
+		\Large
+		\[
+		e = \lim_{n\to\infty}\left(1 + \dfrac{1}{n}\right)^n
+		\]
+	\end{minipage}
+
+	Эти команды всегда должны идти парой!
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Скобки}
+	Знак деления является скобкой неслучайно: иногда хочется увеличивать его.
+	
+	\begin{minipage}{0.54\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[M(f)=
+			\left(\int\limits_a^bf(x)\,dx\right)
+			/(b-a)\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+		\[
+		M(f)=\
+		\left(\int\limits_a^bf(x)\,dx\right)
+		/(b-a)
+		\]
+	\end{minipage}
+
+	Используя точку вместо левой скобки, можно указать \LaTeX{}, под размер чего подгонять правую скобку.
+	
+	\begin{minipage}{0.54\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+				M(f)=\left.
+				\left(\int\limits_a^bf(x)\,dx\right)
+				\right/(b-a)
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+		\[
+		M(f)=\left.
+		\left(\int\limits_a^bf(x)\,dx\right)
+		\right/(b-a)
+		\]
+	\end{minipage}
+	
+\end{frame}
+
+\begin{frame}[fragile]{Скобки}
+	
+	\large
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\[
+		\int\limits_a^b x^{-2}\,dx = -\left.\dfrac{1}{x}\right|_a^b
+		\]
+	\end{minted}
+	\Large
+	\[
+		\int\limits_a^b x^{-2}\,dx = -\left.\dfrac{1}{x}\right|_a^b
+	\]
+	
+
+	
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Скобки}
+	Иногда автоматически подобранный размер неудачен. В таких случаях можно в ручную указать конкретный размер скобки.
+	
+	\begin{center}
+		\input{formulas/braces_sizes.tex}
+	\end{center}
+	
+	\large
+	
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			$$\left||x+1| - |x-1|\right|$$
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		$$\left||x+1| - |x-1|\right|$$
+	\end{minipage}
+
+	\begin{minipage}{0.49\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			$$\bigl||x+1| - |x-1|\bigr|$$
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		$$\bigl||x+1| - |x-1|\bigr|$$
+	\end{minipage}
+	
+\end{frame}
+
+
+\begin{frame}[fragile]{Диакритические знаки}
+	\large
+	\begin{center}
+		\input{formulas/diacritic.tex}
+	\end{center}
+	
+	
+	\begin{minipage}{0.59\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\[
+			\ddot a \eqdef \dfrac{d^2 a}{dt^2}
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\Large
+		\[
+		\ddot a \eqdef \dfrac{d^2 a}{dt^2}
+		\]
+	\end{minipage}
+
+	\begin{minipage}{0.59\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\[
+			\bar x =  \dfrac1n \sum_{i=1}^n x_i
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\Large
+		\[
+		\bar x =  \dfrac1n \sum_{i=1}^n x_i
+		\]
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Диакритические знаки}
+	\large
+	
+	Диакритические знаки с прошлого слайда имеют фиксированную ширину.
+	
+	\begin{minipage}{0.59\textwidth}
+		\mintinline{TeX}{$\hat{f*g}=\hat f\cdot\hat g$}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\begin{center}
+			$\hat{f*g}=\hat f\cdot\hat g$
+		\end{center}
+	\end{minipage}
+	
+	\begin{minipage}{0.59\textwidth}
+		\mintinline{TeX}{$\vec{AC} = \vec{AB} + \vec{BC}$}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\begin{center}
+			$\vec{AC} = \vec{AB} + \vec{BC}$
+		\end{center}
+	\end{minipage}
+
+	В таких ситуациях лучше использовать команды \mintinline{TeX}{\widehat}, \mintinline{TeX}{\overline}, \mintinline{TeX}{\overrightarrow}  и т.п.
+
+	\begin{minipage}{0.59\textwidth}
+		\mintinline{TeX}{$\widehat{f*g}=\hat f\cdot\hat g$}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\begin{center}
+			$\widehat{f*g}=\hat f\cdot\hat g$
+		\end{center}
+	\end{minipage}
+
+	\begin{minipage}{0.59\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+			\[
+			\overrightarrow{AC} = 
+			\overrightarrow{AB} + 
+			\overrightarrow{BC}
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\begin{center}
+			\[
+			\overrightarrow{AC} = 
+			\overrightarrow{AB} + 
+			\overrightarrow{BC}
+			\]
+		\end{center}
+	\end{minipage}	
+\end{frame}
+
+
+\begin{frame}[fragile]{Матрицы}
+	Матрицы с круглыми скобками набираются с помощью окружения \mintinline{TeX}{pmatrix}. Матрицы задаются по строкам, строки отделятся с помощью \mintinline{TeX}{\\}, а столбцы с помощью \mintinline{TeX}{&}. 
+	
+	\begin{minipage}{0.59\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single,  fontsize=\small]{TeX}
+			\[
+				\begin{pmatrix}
+					a_1 & a_2 
+				\end{pmatrix}
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\begin{center}
+			\LARGE
+			\[
+			\begin{pmatrix}
+				a_1 & a_2 
+			\end{pmatrix}
+			\]
+		\end{center}
+	\end{minipage}	
+
+	\begin{minipage}{0.59\textwidth}
+		\begin{minted}[autogobble, tabsize=2, frame=single, fontsize=\small]{TeX}
+			\[
+			\begin{pmatrix}
+				a_1 \\ a_2 
+			\end{pmatrix}
+			\]
+		\end{minted}
+	\end{minipage}
+	\begin{minipage}{0.39\textwidth}
+		\begin{center}
+			\LARGE
+			\[
+			\begin{pmatrix}
+				a_1 \\ a_2 
+			\end{pmatrix}
+			\]
+		\end{center}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Матрицы: \mintinline{TeX}{pmatrix}}
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+	\[
+	\begin{pmatrix}
+			a_{11} - \lambda & a_{12} & a_{13} \\
+			a_{21} & a_{22} - \lambda & a_{23} \\
+			a_{31} & a_{32} & a_{33} - \lambda
+	\end{pmatrix}
+	\]
+	\end{minted}
+	\Large
+	\[
+	\begin{pmatrix}
+		a_{11} - \lambda & a_{12} & a_{13} \\
+		a_{21} & a_{22} - \lambda & a_{23} \\
+		a_{31} & a_{32} & a_{33} - \lambda
+	\end{pmatrix}
+	\]
+\end{frame}
+
+
+\begin{frame}[fragile]{Матрицы: \mintinline{TeX}{matrix}}
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\[
+		\begin{matrix}
+			a_{11} - \lambda & a_{12} & a_{13} \\
+			a_{21} & a_{22} - \lambda & a_{23} \\
+			a_{31} & a_{32} & a_{33} - \lambda
+		\end{matrix}
+		\]
+	\end{minted}
+	\Large
+	\[
+	\begin{matrix}
+		a_{11} - \lambda & a_{12} & a_{13} \\
+		a_{21} & a_{22} - \lambda & a_{23} \\
+		a_{31} & a_{32} & a_{33} - \lambda
+	\end{matrix}
+	\]
+\end{frame}
+
+\begin{frame}[fragile]{Матрицы: \mintinline{TeX}{vmatrix}}
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\[
+		\begin{vmatrix}
+			a_{11} - \lambda & a_{12} & a_{13} \\
+			a_{21} & a_{22} - \lambda & a_{23} \\
+			a_{31} & a_{32} & a_{33} - \lambda
+		\end{vmatrix}
+		\]
+	\end{minted}
+	\Large
+	\[
+	\begin{vmatrix}
+		a_{11} - \lambda & a_{12} & a_{13} \\
+		a_{21} & a_{22} - \lambda & a_{23} \\
+		a_{31} & a_{32} & a_{33} - \lambda
+	\end{vmatrix}
+	\]
+\end{frame}
+
+\begin{frame}[fragile]{Матрицы: \mintinline{TeX}{Vmatrix}}
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\[
+		\begin{Vmatrix}
+			a_{11} - \lambda & a_{12} & a_{13} \\
+			a_{21} & a_{22} - \lambda & a_{23} \\
+			a_{31} & a_{32} & a_{33} - \lambda
+		\end{Vmatrix}
+		\]
+	\end{minted}
+	\Large
+	\[
+	\begin{Vmatrix}
+		a_{11} - \lambda & a_{12} & a_{13} \\
+		a_{21} & a_{22} - \lambda & a_{23} \\
+		a_{31} & a_{32} & a_{33} - \lambda
+	\end{Vmatrix}
+	\]
+\end{frame}
+
+\begin{frame}[fragile]{Матрицы: \mintinline{TeX}{bmatrix}}
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\[
+		\begin{bmatrix}
+			a_{11} - \lambda & a_{12} & a_{13} \\
+			a_{21} & a_{22} - \lambda & a_{23} \\
+			a_{31} & a_{32} & a_{33} - \lambda
+		\end{bmatrix}
+		\]
+	\end{minted}
+	\Large
+	\[
+	\begin{bmatrix}
+		a_{11} - \lambda & a_{12} & a_{13} \\
+		a_{21} & a_{22} - \lambda & a_{23} \\
+		a_{31} & a_{32} & a_{33} - \lambda
+	\end{bmatrix}
+	\]
+\end{frame}
+
+
+\begin{frame}[fragile]{Матрицы: \mintinline{TeX}{bmatrix}}
+	Матрицы входят в формулы как обычные символы крупного размера.
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\[
+		\vec a = \begin{bmatrix}
+			a_x \\
+			a_y \\
+			a_z 
+		\end{bmatrix}
+		\]
+	\end{minted}
+	\Large
+	\[
+	\vec a = 
+	\begin{bmatrix}
+		a_x \\
+		a_y \\
+		a_z 
+	\end{bmatrix}
+	\]
+\end{frame}
+
+
+\begin{frame}[fragile]{Матрицы: \mintinline{TeX}{bmatrix}}
+	Многоточия в матрице можно поставить командами \mintinline{TeX}{\cdots}, \mintinline{TeX}{\vdots} и \mintinline{TeX}{\ddots}.
+	
+	\begin{minted}[autogobble, tabsize=2, frame=single]{TeX}
+		\[
+		\begin{vmatrix}
+			1 & \cdots & 1 \\
+			\vdots & \ddots & \vdots \\
+			1 & \cdots & 1  
+		\end{vmatrix} = 0
+		\]
+	\end{minted}
+	\Large
+	\[
+	\begin{vmatrix}
+		1 & \cdots & 1 \\
+		\vdots & \ddots & \vdots \\
+		1 & \cdots & 1  
+	\end{vmatrix} = 0
+	\]
+\end{frame}
